@@ -6,10 +6,14 @@ class VMDataManager:
 
     def __init__(self, data_directory='./data'):
         self.data_directory = data_directory
-        self._all_vms_file = os.path.join(self.data_directory, 'get_all_vms.json')
-        self._lc_data_file = os.path.join(self.data_directory, 'get_lc_data.json')
-        self._podbox_data_file = os.path.join(self.data_directory, 'get_podbox_data.json')
-        self._get_vm_details_file = os.path.join(self.data_directory, 'get_vm_details.json')
+        self._all_vms_file = (
+            os.path.join(self.data_directory, 'get_all_vms.json'))
+        self._lc_data_file = (
+            os.path.join(self.data_directory, 'get_lc_data.json'))
+        self._podbox_data_file = (
+            os.path.join(self.data_directory, 'get_podbox_data.json'))
+        self._get_vm_details_file = (
+            os.path.join(self.data_directory, 'get_vm_details.json'))
 
     def _load_json_file(self, file_path):
         if not os.path.exists(file_path):
@@ -22,7 +26,8 @@ class VMDataManager:
             print(f"Error: Invalid JSON format in {file_path}")
             return None
         except Exception as e:
-            print(f"An unexpected error occurred while loading {file_path}: {e}")
+            print(f"An unexpected error occurred while loading "
+                  f"{file_path}: {e}")
             return None
 
     def get_all_vm_ids(self):
@@ -47,7 +52,8 @@ class VMDataManager:
                 first_dict = entry_list[0]
                 second_dict = entry_list[1]
                 if (isinstance(first_dict, dict) and 'deployedvm' in first_dict
-                        and isinstance(second_dict, dict) and 'version' in second_dict):
+                        and isinstance(second_dict, dict)
+                        and 'version' in second_dict):
                     if first_dict['deployedvm'] == vm_id:
                         return second_dict['version']
         return 'data not found'
@@ -58,7 +64,8 @@ class VMDataManager:
             return 'data not found'
 
         for podbox_entry in all_podbox_data:
-            if isinstance(podbox_entry, dict) and 'id' in podbox_entry and 'podbox' in podbox_entry:
+            if (isinstance(podbox_entry, dict) and 'id' in podbox_entry
+                    and 'podbox' in podbox_entry):
                 if podbox_entry['id'] == vm_id:
                     return podbox_entry['podbox']
         return 'data not found'
